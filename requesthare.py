@@ -12,7 +12,7 @@ def handle_request():
         # Forward the request to the Pico W
         # response = requests.get('http://pico-w-address/' + data['request'])
         response = "nice"
-        return "amraj aujla loves kids"
+        return "test"
     else:
         print("hello there")
         return 'Invalid request'
