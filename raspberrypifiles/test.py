@@ -82,8 +82,18 @@ def handle_request():
         cattimer = int(data['request'][10:]) + time.time()
         cat_activated = True
         return "cat is activated"
+    elif data['request'] == "Cancel-Cat":
+        cat_activated = False
+        return "Cat is cancelled"
+    elif data['request'] == "Cancel-Dog":
+       dog_activated = False
+       return "Dog is cancelled"
+        
     else:
         print("hello there")
+        print(data['request'] == "Left")
+        print(f"{len(data['request'])} {data['request']}")
+        print(data['request'][0])
         return 'Invalid request'
 
 
@@ -106,4 +116,4 @@ if __name__ == '__main__':
     background_thread = Thread(target = Timer)
     background_thread.start()
 
-    app.run(host="10.43.12.121", debug=True, port=5000)
+    app.run(host="192.168.137.10", debug=True, port=5000)
