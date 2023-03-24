@@ -12,17 +12,20 @@
       </div>
       <div class="col-6">
         <div>
-          <q-img src="https://cdn.quasar.dev/img/parallax2.jpg"></q-img>
+          <q-img style="border-radius: 8px;" src="https://cdn.quasar.dev/img/parallax2.jpg" class="shadow-1"></q-img>
           <!--<q-video
             :ratio="16 / 9"
              src="https://www.youtube.com/embed/k3_tw44QsZQ?rel=0"
           />-->
         </div>
         <div >
-          <q-toggle v-for="(_, i) in numInputs" v-model="toggled[i]" :key="i" keep-color/>
+         <!---- <q-toggle v-for="(_, i) in numInputs" v-model="toggled[i]" :key="i" keep-color/>
+         />-->
           <q-btn @click="sendRequest">Apply</q-btn>
           <q-btn @click="sendCatRequest">Cat</q-btn>
           <q-btn @click="sendDogRequest">Dog</q-btn>
+          <feeder-options />
+
         </div>
       </div>
     </div>
@@ -31,6 +34,7 @@
 
 <script setup lang="ts">
 import FeedingFeed from "components/FeedingFeed.vue";
+import FeederOptions from "components/FeederOptions.vue";
 import { reactive } from "vue";
 import { useRoute } from "vue-router";
 
