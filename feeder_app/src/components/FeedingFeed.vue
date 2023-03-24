@@ -45,7 +45,7 @@ async function feed() {
 <template>
   <q-btn @click="feed">FEED</q-btn>
   <q-timeline>
-    <q-timeline-entry heading> Test entry </q-timeline-entry>
+    <q-timeline-entry heading> Feeding History </q-timeline-entry>
     <transition-group name="feed-entry">
     <q-timeline-entry
       v-for="event in events"

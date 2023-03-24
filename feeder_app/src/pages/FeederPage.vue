@@ -2,27 +2,30 @@
 <q-page padding>
     <div class="row q-col-gutter-md">
       <div class="col-6">
-        <q-card>
+        <q-card style="height: 555px; width: 500px;" class="row items-center justify-evenly">
           <q-card-section>
+          <q-scroll-area style="height: 500px; width: 400px;">
             <feeding-feed />
-          </q-card-section>
+          </q-scroll-area>
+        </q-card-section>
         </q-card>
       </div>
       <div class="col-6">
         <div>
-          <q-video
+          <q-img src="https://cdn.quasar.dev/img/parallax2.jpg"></q-img>
+          <!--<q-video
             :ratio="16 / 9"
-            src="https://www.youtube.com/embed/k3_tw44QsZQ?rel=0"
-          />
+             src="https://www.youtube.com/embed/k3_tw44QsZQ?rel=0"
+          />-->
         </div>
         <div >
           <q-toggle v-for="(_, i) in numInputs" v-model="toggled[i]" :key="i" keep-color/>
-          <q-btn>Apply</q-btn>
+          <q-btn @click="sendRequest">Apply</q-btn>
+          <q-btn @click="sendCatRequest">Cat</q-btn>
+          <q-btn @click="sendDogRequest">Dog</q-btn>
         </div>
       </div>
     </div>
-    <router-link :to="{ name: 'feeder', query: { id: 'foo' } }" />
-    <router-link to="/foo?id=foo" />
   </q-page>
 </template>
 
@@ -36,5 +39,50 @@ const numInputs = 4
 const toggled = reactive(Array.from({ length: numInputs }, () => false ))
 
 const route = useRoute();
+
+const cat = {
+  request: "Left"
+};
+
+const dog = {
+  request: "Right"
+};
+
+
+async function sendRequest() {
+  const response = await fetch('http://localhost:5000/', {
+    method: 'POST',
+    headers: {
+      'Content-Type': 'application/json'
+    },
+    body: JSON.stringify(toggled)
+  });
+  const data = await response.json();
+  console.log(data);
+}
+
+async function sendCatRequest() {
+  const response = await fetch('http://localhost:5000/api/v1/users/create', {
+    method: 'POST',
+    headers: {
+      'Content-Type': 'application/json'
+    },
+    body: JSON.stringify(cat)
+  });
+  const data = await response.json();
+  console.log(data);
+}
+
+async function sendDogRequest() {
+  const response = await fetch('http://localhost:5000/api/v1/users/create', {
+    method: 'POST',
+    headers: {
+      'Content-Type': 'application/json'
+    },
+    body: JSON.stringify(dog)
+  });
+  const data = await response.json();
+  console.log(data);
+}
 
 </script>
