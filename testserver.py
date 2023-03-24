@@ -17,28 +17,54 @@ def basic_authentication():
 @app.route("/api/v1/users/create", methods=['GET', 'POST'])
 @cross_origin(allow_headers=['Content-Type'])
 def handle_request():
-    # Define the URL and JSON payload
-    #url = "http://10.43.12.121:5000/"
-    #payload = {"request": "Left"}
-    # response = jsonify({'request': input['request']})
-    input = request.get_json()
-    print(input['request'])
-    response = jsonify(message="Simple server is running")
-    #response.headers.add('Access-Control-Allow-Origin', '*')
-    return response
-
-    # Convert the payload to JSON
-    json_payload = json.dumps(payload)
-
+    # Get the JSON payload from the client
+    input_data = request.get_json()
+    
+    # Define the URL to forward the request to
+    url = "http://192.168.137.172:5000"
+    
     # Set the content type header to JSON
     headers = {"Content-Type": "application/json"}
 
-    # Send the POST request with the JSON payload
-    #response = requests.post(url, data=json_payload, headers=headers)
+    # Send a POST request with the JSON payload to the specified URL
+    response = requests.post(url, json=input_data, headers=headers)
 
-    # Print the response
-    # print(response.text)
-    #return "Hello World!"
+    # Check if the request was successful
+    if response.ok:
+        resp = {"response": "success"}
+        rep = json.dumps(resp)
+        return rep
+    else:
+        resp = {"response": "failure"}
+        rep = json.dumps(resp)
+        return rep
+
+
+# @app.route("/api/v1/users/create", methods=['GET', 'POST'])
+# @cross_origin(allow_headers=['Content-Type'])
+# def handle_request():
+#     # Define the URL and JSON payload
+#     #url = "http://10.43.12.121:5000/"
+#     #payload = {"request": "Left"}
+#     # response = jsonify({'request': input['request']})
+#     input = request.get_json()
+#     print(input['request'])
+#     response = jsonify(message="Simple server is running")
+#     #response.headers.add('Access-Control-Allow-Origin', '*')
+#     return response
+
+#     # Convert the payload to JSON
+#     json_payload = json.dumps(payload)
+
+#     # Set the content type header to JSON
+#     headers = {"Content-Type": "application/json"}
+
+#     # Send the POST request with the JSON payload
+#     #response = requests.post(url, data=json_payload, headers=headers)
+
+#     # Print the response
+#     # print(response.text)
+#     #return "Hello World!"
 
 if __name__ == '__main__':
     app.run(debug=True, port=5000)
