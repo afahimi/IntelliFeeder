@@ -1,8 +1,5 @@
-export interface Todo {
+export interface FeedEvent {
   id: number;
-  content: string;
-}
-
-export interface Meta {
-  totalCount: number;
+  title: string;
+  date: string;
 }

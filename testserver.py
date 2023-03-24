@@ -14,7 +14,7 @@ def basic_authentication():
         return Response()
 
 
-@app.route("/api/v1/users/create", methods=['GET', 'POST'])
+@app.route("/api/feed", methods=['GET', 'POST'])
 @cross_origin(allow_headers=['Content-Type'])
 def handle_request():
     # Define the URL and JSON payload
@@ -23,22 +23,15 @@ def handle_request():
     # response = jsonify({'request': input['request']})
     input = request.get_json()
     print(input['request'])
-    response = jsonify(message="Simple server is running")
-    #response.headers.add('Access-Control-Allow-Origin', '*')
-    return response
+    if (input['request'] == "Left"):
+        return jsonify({'request': "cat-success"})
+    elif (input['request'] == "Right"):
+        return jsonify({'request': "dog-success"})
 
-    # Convert the payload to JSON
-    json_payload = json.dumps(payload)
-
-    # Set the content type header to JSON
-    headers = {"Content-Type": "application/json"}
-
-    # Send the POST request with the JSON payload
-    #response = requests.post(url, data=json_payload, headers=headers)
-
-    # Print the response
-    # print(response.text)
-    #return "Hello World!"
+    else:
+        response = jsonify({'request': "error"})
+        response.status_code = 400
+        return response
 
 if __name__ == '__main__':
     app.run(debug=True, port=5000)
