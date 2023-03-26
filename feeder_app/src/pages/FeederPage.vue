@@ -22,15 +22,10 @@
           />-->
         </div>
         <div>
-          <q-toggle
-            v-for="(_, i) in numInputs"
-            v-model="toggled[i]"
-            :key="i"
-            keep-color
-          />
           <q-btn>Apply</q-btn>
           <q-btn @click="feedCat">Cat</q-btn>
           <q-btn @click="feedDog">Dog</q-btn>
+          <feeder-options />
         </div>
       </div>
     </div>
