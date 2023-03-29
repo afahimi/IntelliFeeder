@@ -1,6 +1,8 @@
 <template>
 <div class="q-pa-md">
     <div style="max-width: 600px">
+      <q-btn @click="collectDataAndSend" :disable="disableButton">Apply</q-btn>
+
       <q-tabs v-model="tab" align="justify" narrow-indicator class="q-mb-lg">
         <q-tab class="text-purple" name="Dog" label="Dog" />
         <q-tab class="text-orange" name="Cat" label="Cat" />
@@ -206,7 +208,6 @@
 
 <script>
 import { ref } from "vue";
-
 export default {
   setup() {
     return {
@@ -226,14 +227,108 @@ export default {
       catToggled: false,
     }
   },
+  computed: {
+  dogTimesInSeconds() {
+    return this.dogTimes.map(timeString => this.secondsFromCurrentTime(timeString));
+  },
+  catTimesInSeconds() {
+    return this.catTimes.map(timeString => this.secondsFromCurrentTime(timeString));
+  },
+  disableButton() {
+      const regex = /^([01]\d|2[0-3]):?([0-5]\d)$/;
+      for (let i = 0; i < this.dogTimes.length; i++) {
+        if (!regex.test(this.dogTimes[i])) {
+          return true;
+        }
+      }
+      for (let i = 0; i < this.catTimes.length; i++) {
+        if (!regex.test(this.catTimes[i])) {
+          return true;
+        }
+      }
+      return false;
+    }
+  },
+
   methods: {
+    secondsFromCurrentTime(timeString) {
+      const currentTime = new Date();
+      const [hours, minutes] = timeString.split(":");
+      const targetTime = new Date(
+        currentTime.getFullYear(),
+        currentTime.getMonth(),
+        currentTime.getDate(),
+        hours,
+        minutes
+      );
+      const timeDifference = targetTime.getTime() - currentTime.getTime();
+      return Math.floor(timeDifference / 1000);
+    },    
     toggleDogStyle() {
       this.dogToggled = !this.dogToggled
     },
     toggleCatStyle() {
       this.catToggled = !this.catToggled
     },
-  },
+    showDogServings() {
+      alert(`Number of dog servings: ${this.dogNumServings}`)
+    },
+    async collectDataAndSend () {
+    const data = {
+      request: 'feed-data',
+      Dog: {
+        numServings: this.dogNumServings,
+        times: this.dogTimesInSeconds,
+        portionSize: this.dogPortionSize
+      },
+      Cat: {
+        numServings: this.catNumServings,
+        times: this.catTimesInSeconds,
+        portionSize: this.catPortionSize
+      }
+    }
+    const jsonData = JSON.stringify(data)
+    console.log(jsonData)
 
+    try {
+      const response = await fetch("http://localhost:5000/api/feed", {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json'
+        },
+        body: jsonData
+      })
+
+      const responseData = await response.json()
+      console.log(responseData)
+    } catch (error) {
+      console.error(error)
+    }
+  }
+},
+watch: {
+  dogNumServings (val) {
+    const times = []
+    for (let i = 0; i < val; i++) {
+      if (i < this.dogTimes.length) {
+        times.push(this.dogTimes[i])
+      } else {
+        times.push('')
+      }
+    }
+    this.dogTimes = times
+  },
+  catNumServings (val) {
+    const times = []
+    for (let i = 0; i < val; i++) {
+      if (i < this.catTimes.length) {
+        times.push(this.catTimes[i])
+      } else {
+        times.push('')
+      }
+    }
+    this.catTimes = times
+  },
+},
 };
 </script>

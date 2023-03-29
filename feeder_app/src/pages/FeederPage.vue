@@ -22,7 +22,6 @@
           />-->
         </div>
         <div>
-          <q-btn>Apply</q-btn>
           <q-btn @click="feedCat">Cat</q-btn>
           <q-btn @click="feedDog">Dog</q-btn>
           <feeder-options />

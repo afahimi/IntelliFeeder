@@ -25,9 +25,14 @@ def handle_request():
     print(input['request'])
     if (input['request'] == "Left"):
         return jsonify({'request': "cat-success"})
+
+    
     elif (input['request'] == "Right"):
         return jsonify({'request': "dog-success"})
 
+    elif (input['request'] == "feed-data"):
+        return jsonify({'request': "data-success"})
+    
     else:
         response = jsonify({'request': "error"})
         response.status_code = 400
