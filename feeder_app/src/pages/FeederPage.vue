@@ -15,16 +15,18 @@
       </div>
       <div class="col-6">
         <div>
-          <q-img style="border-radius: 8px;" src="https://cdn.quasar.dev/img/parallax2.jpg" class="shadow-1"></q-img>
-          <!--<q-video
-            :ratio="16 / 9"
-             src="https://www.youtube.com/embed/k3_tw44QsZQ?rel=0"
-          />-->
-        </div>
-        <div>
+          <q-img
+            :src="imageUrl"
+            style="border-radius: 8px"
+            class="shadow-1"
+          ></q-img>
           <q-btn @click="feedCat">Cat</q-btn>
           <q-btn @click="feedDog">Dog</q-btn>
-          <feeder-options />
+          <feeder-options
+            :toggled="toggled"
+            @feed-cat="feedCat"
+            @feed-dog="feedDog"
+          />
         </div>
       </div>
     </div>
@@ -74,29 +76,6 @@ async function sendFeedRequest(data: { request: "Left" | "Right" }) {
     return;
   }
 
-  // app.post('/feed/:id', (req, res) => {
-  //   const body = feedRequestBody.safeParse(req.body);
-  //   if(!body.success)
-  //     return res.sendStatus(400);
-
-  //   const id = req.params.id;
-
-  //   const pet = await db.pets.findById(id);
-
-  //   if(!pet)
-  //     return res.sendStatus(404);
-
-  //   // feed pet logic
-
-  //   const entry = await db.insert({
-  //     petId: id,
-  //     title: 'Fed ' + pet.name,
-  //     date: new Date()
-  //   })
-
-  //   return res.json(entry);
-  // })
-
   if (responseData.data.request === "dog-success") {
     events.value.unshift({
       id: 1,
@@ -126,6 +105,26 @@ async function feedDog() {
   sendFeedRequest(dog);
 }
 
+const getImageUrl = () => {
+  const timestamp = new Date().getTime();
+  return `/src/images/catdg.jpg?timestamp=${timestamp}`;
+};
+
+const imageUrl = ref(getImageUrl());
+
+const updateImageUrl = async () => {
+  imageUrl.value = getImageUrl();
+};
+
+onMounted(async () => {
+  setInterval(updateImageUrl, 5000);
+
+  const eventsPromise = getEvents();
+  isLoading.value = true;
+  events.value = await eventsPromise;
+  isLoading.value = false;
+});
+
 const getEvents = () =>
   new Promise<FeedEvent[]>((resolve) =>
     setTimeout(() => resolve([] as FeedEvent[]), 500)
@@ -133,9 +132,4 @@ const getEvents = () =>
 
 const events = ref([] as FeedEvent[]);
 const isLoading = ref(false);
-onMounted(async () => {
-  isLoading.value = true;
-  events.value = await getEvents();
-  isLoading.value = false;
-});
 </script>
