@@ -68,12 +68,13 @@ while True:
             # Display the image and the predicted classes and scores
             best = 0
             for i in range(len(scores)):
-                if scores[i] > 0.5:
+                if scores[i] > 0.7:
                     if classes[i] == 1:
                         best = 1
                     elif 17 < best < 23 :
                         best = 17          
-                print(scores[i])
+            if i == 1:
+                print("Human with probability" + str(scores[i]))
             if (best == 17 or best == 1):   
                 # Load image
                 img = cv2.imread('Image.png')
