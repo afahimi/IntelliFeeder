@@ -10,7 +10,6 @@ const props = defineProps<{
 
 <template>
   <q-timeline>
-    <q-timeline-entry heading> Feeding History </q-timeline-entry>
     <transition-group name="feed-entry">
     <q-timeline-entry
       v-for="event in events"

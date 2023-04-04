@@ -1,32 +1,48 @@
 <template>
   <q-page padding>
-    <div class="row q-col-gutter-md">
+    <div class="row q-col-gutter-md ">
       <div class="col-6">
         <q-card
-          style="height: 555px; width: 500px"
+          style="height: 600px; width: 500px"
           class="row items-center justify-evenly"
         >
           <q-card-section>
-            <q-scroll-area style="height: 500px; width: 400px">
+            <h3 style="margin-top: 10%;" class="text-weight-medium">Feeding History</h3>
+            <q-scroll-area style="height: 380px; width: 400px">
               <feeding-feed :is-loading="isLoading" :events="events" />
             </q-scroll-area>
           </q-card-section>
         </q-card>
       </div>
-      <div class="col-6">
-        <div>
+      <div class="col-6 flex-center">
+        <div class = "flex-center row"
+        style="background-color: #f0f7fa;
+        border-radius: 4px;">
           <q-img
             :src="imageUrl"
-            style="border-radius: 8px"
-            class="shadow-1"
-          ></q-img>
-          <q-btn @click="feedCat">Cat</q-btn>
-          <q-btn @click="feedDog">Dog</q-btn>
+            style="border-radius: 4px; height: 400px;"
+            class="shadow-1"></q-img>
+          <div class="q-pa-md q-gutter-md ">
+            <q-btn unelevated color="primary" @click="feedDog" label="Dispense Dog" />
+            <q-btn unelevated color="primary" @click="feedCat" label="Dispense Cat" />
+          </div>
+          <q-expansion-item
+          icon="pets"
+          label="Feeding Settings"
+          header-class="text-primary"
+          class = "full-width"
+          color = "primary"
+          expand-icon-class="text-primary"
+
+          style="font-size: 16px;"
+          >
           <feeder-options
             :toggled="toggled"
             @feed-cat="feedCat"
             @feed-dog="feedDog"
           />
+          </q-expansion-item>
+
         </div>
       </div>
     </div>
@@ -125,7 +141,7 @@ const updateImageUrl = async () => {
 };
 
 onMounted(async () => {
-  setInterval(updateImageUrl, 5000);
+  setInterval(updateImageUrl, 30000);
 
   const eventsPromise = getEvents();
   isLoading.value = true;
@@ -141,3 +157,7 @@ const getEvents = () =>
 const events = ref([] as FeedEvent[]);
 const isLoading = ref(false);
 </script>
+
+<style lang="scss">
+
+</style>
