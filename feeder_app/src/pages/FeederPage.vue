@@ -91,6 +91,14 @@ async function sendFeedRequest(data: { request: "Left" | "Right" }) {
       date: new Date().toLocaleTimeString("en-US"),
     });
     return;
+  } 
+  if (responseData.data.request === "dog-cat-success") {
+    events.value.unshift({
+      id: 3,
+      title: "Fed Dog and Cat",
+      date: new Date().toLocaleTimeString("en-US"),
+    });
+    return;
   } else {
     console.error("Invalid response", response.data);
     return;

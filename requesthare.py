@@ -15,7 +15,11 @@ def handle_request():
 
     return "hi"
 
+@app.route('/')
+def handle_request():
+    return "get page on request hare"
+
 if __name__ == '__main__':
-    app.run(host="10.33.45.110", port=5000, debug=True)
+    app.run(port=5000, debug=True)
 
 # host="128.189.239.223",
