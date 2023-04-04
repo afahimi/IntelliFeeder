@@ -7,11 +7,14 @@ const routes: RouteRecordRaw[] = [
 
     children: [
 
-      { path: '', component: () => import('pages/LandingPage.vue') },
+      { path: '', component: () => import('pages/LandingPage.vue'), meta: { layout: 'LandingLayout' } },
 
       { path: 'feeder', name: 'feeder', component: () => import('pages/FeederPage.vue') },
+
+      { path : 'landing', name: 'landing', component: () => import('pages/LandingPage.vue') },
     ],
   },
+
 
   {
     path: '/:catchAll(.*)*',

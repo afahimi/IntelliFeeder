@@ -1,8 +1,6 @@
 <template>
   <div class="q-pa-md">
     <div style="max-width: 600px">
-      <q-btn @click="collectDataAndSend" :disable="disableButton">Apply</q-btn>
-
       <q-tabs v-model="tab" align="justify" narrow-indicator class="q-mb-lg">
         <q-tab class="text-blue" name="Dog" label="Dog" />
         <q-tab class="text-blue" name="Cat" label="Cat" />
@@ -10,7 +8,7 @@
 
       <div class="q-gutter-y-sm">
         <q-tab-panels v-model="tab" animated transition-prev="scale" transition-next="scale"
-          class="bg-white text-primary text-center">
+          class="bg-white text-primary text-center" style="border-radius: 20px;">
           <q-tab-panel name="Dog">
             <div class="text-h6">Dog</div>
             <div class="q-pa-lg">
@@ -85,6 +83,13 @@
           </q-tab-panel>
         </q-tab-panels>
       </div>
+    </div>
+    <div class = "q-pa-md">
+      <q-btn @click="collectDataAndSend" rounded unelevated
+      :disable="disableButton"
+      class = "apply-btn"
+      size="20px" label="Apply"
+      />
     </div>
   </div>
 </template>
@@ -215,3 +220,31 @@ export default {
   },
 };
 </script>
+
+<style lang="scss">
+.apply-btn {
+  padding-top: 20px;
+  padding-bottom: 20px;
+  border: 6px solid rgba(255,255,255, 0.9);
+  border-radius: 50px;
+  //background-image: linear-gradient(90deg, #0061ff, #60efff);
+  background-image:  linear-gradient(-45deg, #6f7bf7, #12cff3, #338AFF, #30c5d2);
+  animation: anime 14s linear infinite;
+  background-repeat: no-repeat;
+  background-clip: padding-box;
+  width: 100%;
+  color: white;
+  background-size: 600%;
+}
+@keyframes anime {
+  0% {
+    background-position: 0% 50%;
+  }
+  50% {
+    background-position: 100% 50%;
+  }
+  100% {
+    background-position: 0% 50%;
+  }
+}
+</style>
