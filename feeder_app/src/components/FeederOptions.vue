@@ -38,9 +38,9 @@
             <label style="padding-left: 5%" class="text-h6">Portion Sizes</label>
             <div class="q-pa-md">
               <q-btn-toggle v-model="dogPortionSize" toggle-color="primary" :options="[
-                { label: 'Small', value: '1' },
-                { label: 'Medium', value: '2' },
-                { label: 'Large', value: '3' },
+                { label: 'Small', value: 1 },
+                { label: 'Medium', value: 2 },
+                { label: 'Large', value: 3 },
               ]" @click.native="toggleDogStyle" :class="{ toggled: dogToggled }" />
             </div>
           </q-tab-panel>
