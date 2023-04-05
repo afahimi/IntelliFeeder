@@ -9,7 +9,7 @@
           <q-card-section>
             <h3 style="margin-top: 10%;" class="text-weight-medium">Feeding History</h3>
             <q-scroll-area style="height: 380px; width: 400px">
-              <feeding-feed :is-loading="isLoading" :events="events" />
+              <feeding-feed :is-loading="isLoading" :events="events"/>
             </q-scroll-area>
           </q-card-section>
         </q-card>
@@ -23,8 +23,8 @@
             style="border-radius: 4px; height: 400px;"
             class="shadow-1"></q-img>
           <div class="q-pa-md q-gutter-md ">
-            <q-btn unelevated color="primary" @click="feedDog" label="Dispense Dog" />
-            <q-btn unelevated color="primary" @click="feedCat" label="Dispense Cat" />
+            <q-btn unelevated color="primary" @click="feedDog" label="Dispense for Dog" />
+            <q-btn unelevated color="primary" @click="feedCat" label="Dispense for Cat" />
           </div>
           <q-expansion-item
           icon="pets"
@@ -33,8 +33,7 @@
           class = "full-width"
           color = "primary"
           expand-icon-class="text-primary"
-
-          style="font-size: 16px;"
+          style="font-size: 16px; border-radius: 4px;"
           >
           <feeder-options
             :toggled="toggled"

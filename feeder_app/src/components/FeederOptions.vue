@@ -38,9 +38,9 @@
             <label style="padding-left: 5%" class="text-h6">Portion Sizes</label>
             <div class="q-pa-md">
               <q-btn-toggle v-model="dogPortionSize" toggle-color="primary" :options="[
-                { label: 'Small', value: 'one' },
-                { label: 'Medium', value: 'two' },
-                { label: 'Large', value: 'three' },
+                { label: 'Small', value: '1' },
+                { label: 'Medium', value: '2' },
+                { label: 'Large', value: '3' },
               ]" @click.native="toggleDogStyle" :class="{ toggled: dogToggled }" />
             </div>
           </q-tab-panel>
@@ -75,9 +75,9 @@
             <label style="padding-left: 5%" class="text-h6">Portion Sizes</label>
             <div class="q-pa-md">
               <q-btn-toggle v-model="catPortionSize" toggle-color="primary" :options="[
-                { label: 'Small', value: 'one' },
-                { label: 'Medium', value: 'two' },
-                { label: 'Large', value: 'three' },
+                { label: 'Small', value: 1 },
+                { label: 'Medium', value: 2 },
+                { label: 'Large', value: 3 },
               ]" @click.native="toggleCatStyle" :class="{ toggled: catToggled }" />
             </div>
           </q-tab-panel>
@@ -85,7 +85,14 @@
       </div>
     </div>
     <div class = "q-pa-md">
-      <q-btn @click="collectDataAndSend" rounded unelevated
+      <q-ajax-bar
+      ref="bar"
+      position="bottom"
+      color="primary"
+      size="10px"
+      skip-hijack
+    />
+      <q-btn @click = "collectDataAndSend(); trigger()"  rounded unelevated
       :disable="disableButton"
       class = "apply-btn"
       size="20px" label="Apply"
@@ -98,8 +105,24 @@
 import { ref } from "vue";
 export default {
   setup() {
+    
+    const bar = ref(null)
+    function trigger () {
+      const barRef = bar.value
+      barRef.start()
+
+      setTimeout(() => {
+        const barRef = bar.value
+        if (barRef) {
+          barRef.stop()
+        }
+      }, Math.random() * 400 + 10)
+    }
     return {
+      bar,
+      trigger,
       tab: ref("Dog"),
+
     };
   },
   data() {
@@ -107,11 +130,11 @@ export default {
       tab: 'Dog',
       dogNumServings: 1,
       dogTimes: ['0000', '0000', '0000', '0000'],
-      dogPortionSize: 'one',
+      dogPortionSize: 1,
       dogToggled: false,
       catNumServings: 1,
       catTimes: ['0000', '0000', '0000', '0000'],
-      catPortionSize: 'one',
+      catPortionSize: 1,
       catToggled: false,
     }
   },
@@ -193,6 +216,7 @@ export default {
         console.error(error)
       }
     }
+    
   },
   watch: {
     dogNumServings(val) {
@@ -201,7 +225,7 @@ export default {
         if (i < this.dogTimes.length) {
           times.push(this.dogTimes[i])
         } else {
-          times.push('')
+          times.push('0000')
         }
       }
       this.dogTimes = times
@@ -211,8 +235,9 @@ export default {
       for (let i = 0; i < val; i++) {
         if (i < this.catTimes.length) {
           times.push(this.catTimes[i])
-        } else {
-          times.push('')
+              } 
+              else {
+          times.push('0000')
         }
       }
       this.catTimes = times
@@ -247,4 +272,5 @@ export default {
     background-position: 0% 50%;
   }
 }
+
 </style>
