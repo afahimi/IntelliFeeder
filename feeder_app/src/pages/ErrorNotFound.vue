@@ -1,4 +1,6 @@
 <template>
+  <!-- 404 page if user accidentally access a page that doesn't exist -->
+
   <div class="fullscreen bg-blue text-white text-center q-pa-md flex flex-center">
     <div>
       <div style="font-size: 30vh">
@@ -9,6 +11,7 @@
         Oops. Nothing here...
       </div>
 
+      <!-- redirect to home -->
       <q-btn
         class="q-mt-xl"
         color="white"

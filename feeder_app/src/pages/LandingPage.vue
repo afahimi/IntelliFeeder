@@ -31,15 +31,17 @@ console.log('landing page')
 </script>
 
 <style lang="scss">
-  
+
+/* gradient background for the get started button */
 .gradient {
   background-image:  linear-gradient(-45deg, #6f7bf7, #12cff3, #338AFF, #30c5d2);
-  animation: anime 14s linear infinite;
+  animation: anime 14s linear infinite; /* animate for the gradient */
   background-repeat: no-repeat;
   background-clip: padding-box;
   background-size: 600%;
 }
 
+/* formatting for the get started button */
 .get-started {
   margin-top: 15%;
   color: #00a6fb;
@@ -50,6 +52,7 @@ console.log('landing page')
   border-radius: 50px;
 }
 
+/* animation for the gradient background by sliding gradient back and forth*/
 @keyframes anime {
   0% {
     background-position: 0% 50%;

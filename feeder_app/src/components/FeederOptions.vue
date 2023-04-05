@@ -1,24 +1,27 @@
 <template>
   <div class="q-pa-md">
+
+    <!-- toggle between cat and dog settings tabs -->
     <div style="max-width: 600px">
       <q-tabs v-model="tab" align="justify" narrow-indicator class="q-mb-lg">
         <q-tab class="text-blue" name="Dog" label="Dog" />
         <q-tab class="text-blue" name="Cat" label="Cat" />
       </q-tabs>
 
+      <!-- cat and dog settings tabs -->
       <div class="q-gutter-y-sm">
         <q-tab-panels v-model="tab" animated transition-prev="scale" transition-next="scale"
           class="bg-white text-primary text-center" style="border-radius: 20px;">
           <q-tab-panel name="Dog">
             <div class="text-h6">Dog</div>
             <div class="q-pa-lg">
-              <label class="text-h6">Number of servings per day</label>
+              <label class="text-h6">Number of servings per day</label> <!-- q-slider component for the number of servings per day -->
               <q-slider v-model="dogNumServings" color="primary" thumb-color="primary" markers marker-labels
                 marker-labels-class="text-black" switch-marker-labels-side switch-label-side :min="1" :max="4" />
             </div>
             <div class="q-pa-md">
               <q-row>
-                <q-col v-for="i in dogNumServings" :key="i">
+                <q-col v-for="i in dogNumServings" :key="i"> <!-- q-input component for the time of each serving -->
                   <q-input filled v-model="dogTimes[i - 1]" mask="time" :rules="['time']">
                     <template v-slot:append>
                       <q-icon name="access_time" class="cursor-pointer">
@@ -36,7 +39,7 @@
               </q-row>
             </div>
             <label style="padding-left: 5%" class="text-h6">Portion Sizes</label>
-            <div class="q-pa-md">
+            <div class="q-pa-md"> <!-- q-btn-toggle component for the portion sizes -->
               <q-btn-toggle v-model="dogPortionSize" toggle-color="primary" :options="[
                 { label: 'Small', value: 1 },
                 { label: 'Medium', value: 2 },
@@ -47,14 +50,14 @@
 
           <q-tab-panel name="Cat">
             <div class="text-h6">Cat</div>
-            <div class="q-pa-lg">
+            <div class="q-pa-lg"> <!-- q-slider component for the number of servings per day -->
               <label class="text-h6">Number of servings per day</label>
               <q-slider v-model="catNumServings" color="primary" thumb-color="primary" markers marker-labels
                 marker-labels-class="text-black" switch-marker-labels-side switch-label-side :min="1" :max="4" />
             </div>
 
             <div class="q-pa-md">
-              <q-row>
+              <q-row> <!-- q-input component for the time of each serving -->
                 <q-col v-for="i in catNumServings" :key="i" cols="12">
                   <q-input filled v-model="catTimes[i - 1]" mask="time" :rules="['time']">
                     <template v-slot:append>
@@ -73,7 +76,7 @@
               </q-row>
             </div>
             <label style="padding-left: 5%" class="text-h6">Portion Sizes</label>
-            <div class="q-pa-md">
+            <div class="q-pa-md"> <!-- q-btn-toggle component for the portion sizes -->
               <q-btn-toggle v-model="catPortionSize" toggle-color="primary" :options="[
                 { label: 'Small', value: 1 },
                 { label: 'Medium', value: 2 },
@@ -91,7 +94,7 @@
       color="primary"
       size="10px"
       skip-hijack
-    />
+    /> <!-- ajax bar component to show progress of sending data to server with apply settings button -->
       <q-btn @click = "collectDataAndSend(); trigger()"  rounded unelevated
       :disable="disableButton"
       class = "apply-btn"
@@ -105,12 +108,12 @@
 import { ref } from "vue";
 export default {
   setup() {
-    
+
+    // ajax bar function to show progress of sending data to server with apply settings button
     const bar = ref(null)
     function trigger () {
       const barRef = bar.value
       barRef.start()
-
       setTimeout(() => {
         const barRef = bar.value
         if (barRef) {
@@ -127,6 +130,7 @@ export default {
   },
   data() {
     return {
+      // Initializing data for the dog and cat tabs at load up
       tab: 'Dog',
       dogNumServings: 1,
       dogTimes: ['0000', '0000', '0000', '0000'],
@@ -138,6 +142,7 @@ export default {
       catToggled: false,
     }
   },
+  //Converting the time strings to seconds from current time to send to server
   computed: {
     dogTimesInSeconds() {
       return this.dogTimes.map(timeString => this.secondsFromCurrentTime(timeString));
@@ -145,6 +150,7 @@ export default {
     catTimesInSeconds() {
       return this.catTimes.map(timeString => this.secondsFromCurrentTime(timeString));
     },
+    //Disabling the apply button if the time is not in the correct format
     disableButton() {
       const regex = /^([01]\d|2[0-3]):?([0-5]\d)$/;
       for (let i = 0; i < this.dogTimes.length; i++) {
@@ -162,6 +168,7 @@ export default {
   },
 
   methods: {
+    //Converting the time strings to seconds from current time to send to server
     secondsFromCurrentTime(timeString) {
       const currentTime = new Date();
       const [hours, minutes] = timeString.split(":");
@@ -184,6 +191,7 @@ export default {
     showDogServings() {
       alert(`Number of dog servings: ${this.dogNumServings}`)
     },
+    //Sending the data to the server
     async collectDataAndSend() {
       const data = {
         request: 'feed-data',
@@ -216,8 +224,9 @@ export default {
         console.error(error)
       }
     }
-    
+
   },
+  //Adding more time inputs if the user wants to add more servings
   watch: {
     dogNumServings(val) {
       const times = []
@@ -235,7 +244,7 @@ export default {
       for (let i = 0; i < val; i++) {
         if (i < this.catTimes.length) {
           times.push(this.catTimes[i])
-              } 
+              }
               else {
           times.push('0000')
         }
@@ -261,6 +270,7 @@ export default {
   color: white;
   background-size: 600%;
 }
+//Animation for the apply button
 @keyframes anime {
   0% {
     background-position: 0% 50%;
