@@ -1,6 +1,6 @@
-# Automatic Pet Feeder: Your Best Friend's New Best Friend
+# IntelliFeeder: Your Best Friend's New Best Friend
 
-Welcome to our automatic pet feeder project, crafted with both dogs and cats in mind. This innovative system ensures your pets are fed on time, every time, even when you're not around.
+Welcome to IntelliFeeder, crafted with both dogs and cats in mind. This innovative system ensures your pets are fed on time, every time, even when you're not around.
 
 ## Overview
 
