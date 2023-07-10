@@ -1,7 +1,7 @@
 # IntelliFeeder: Your Best Friend's New Best Friend
 
 <p align="center">
-  <img width="460" height="300" src="https://github.com/afahimi/IntelliFeeder/blob/main/IntelliFeeder.jpg">
+  <img width="460" height="500" src="https://github.com/afahimi/IntelliFeeder/blob/main/IntelliFeeder.jpg">
 </p>
 
 Welcome to IntelliFeeder, crafted with both dogs and cats in mind. This innovative system ensures your pets are fed on time, every time, even when you're not around.
